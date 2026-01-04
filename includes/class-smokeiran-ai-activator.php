@@ -44,5 +44,12 @@ class Smokeiran_AI_Activator {
         add_option('smokeiran_ai_auto_process', '0');
         add_option('smokeiran_ai_classic_editor_mode', '1');
         add_option('smokeiran_ai_default_prompt', 'Generate detailed, SEO-optimized content for the following product:');
+        
+        // Schedule cron job if auto-process is enabled
+        if (get_option('smokeiran_ai_auto_process', '0') === '1') {
+            if (!wp_next_scheduled('smokeiran_ai_process_queue')) {
+                wp_schedule_event(time(), 'hourly', 'smokeiran_ai_process_queue');
+            }
+        }
     }
 }

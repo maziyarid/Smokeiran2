@@ -110,6 +110,28 @@ class Smokeiran_AI_Admin {
     }
 
     /**
+     * Handle auto-process settings changes
+     */
+    public function handle_auto_process_settings() {
+        // Check if auto-process setting was just updated
+        if (isset($_POST['smokeiran_ai_save_settings']) && check_admin_referer('smokeiran_ai_settings_nonce')) {
+            $auto_process = isset($_POST['smokeiran_ai_auto_process']) ? '1' : '0';
+            $current_setting = get_option('smokeiran_ai_auto_process', '0');
+            
+            // If auto-process is being enabled
+            if ($auto_process === '1' && $current_setting !== '1') {
+                if (!wp_next_scheduled('smokeiran_ai_process_queue')) {
+                    wp_schedule_event(time(), 'hourly', 'smokeiran_ai_process_queue');
+                }
+            }
+            // If auto-process is being disabled
+            elseif ($auto_process === '0' && $current_setting === '1') {
+                wp_clear_scheduled_hook('smokeiran_ai_process_queue');
+            }
+        }
+    }
+
+    /**
      * Display settings page
      */
     public function display_settings_page() {
@@ -324,5 +346,43 @@ class Smokeiran_AI_Admin {
 
         $stats = Smokeiran_AI_Queue::get_stats();
         wp_send_json_success(array('stats' => $stats));
+    }
+
+    /**
+     * Cron job: Process queue automatically
+     */
+    public function cron_process_queue() {
+        // Process up to 5 items per cron run
+        $batch_size = 5;
+        $processed = 0;
+
+        for ($i = 0; $i < $batch_size; $i++) {
+            $item = Smokeiran_AI_Queue::get_next_pending();
+            
+            if (!$item) {
+                break;
+            }
+
+            Smokeiran_AI_Queue::update_status($item->id, 'processing');
+
+            if ($item->post_type === 'product' && class_exists('WooCommerce')) {
+                $result = Smokeiran_AI_Generator::generate_product_content($item->post_id);
+            } else {
+                $result = Smokeiran_AI_Generator::generate_post_content($item->post_id, $item->prompt);
+            }
+
+            if ($result['success']) {
+                wp_update_post(array(
+                    'ID' => $item->post_id,
+                    'post_content' => $result['content']
+                ));
+                Smokeiran_AI_Queue::update_status($item->id, 'completed', $result['content']);
+                $processed++;
+            } else {
+                Smokeiran_AI_Queue::update_status($item->id, 'failed', null, $result['error']);
+            }
+        }
+
+        return $processed;
     }
 }

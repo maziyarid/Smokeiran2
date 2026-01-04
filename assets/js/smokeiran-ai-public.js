@@ -6,6 +6,12 @@
 
     $(document).ready(function() {
         
+        // Verify smokeiranAI object is available
+        if (typeof smokeiranAI === 'undefined' || !smokeiranAI.ajax_url || !smokeiranAI.nonce) {
+            console.error('Smokeiran AI: Required JavaScript variables not loaded');
+            return;
+        }
+        
         // Handle generate button click from shortcode
         $('.smokeiran-ai-generate-btn').on('click', function() {
             var $button = $(this);
@@ -19,11 +25,11 @@
             $status.html('Processing your request...').addClass('show loading').removeClass('success error');
 
             $.ajax({
-                url: smokeiranAI.ajax_url || '/wp-admin/admin-ajax.php',
+                url: smokeiranAI.ajax_url,
                 type: 'POST',
                 data: {
                     action: 'smokeiran_generate_content',
-                    nonce: smokeiranAI.nonce || '',
+                    nonce: smokeiranAI.nonce,
                     post_id: postId,
                     post_type: postType,
                     custom_prompt: prompt,

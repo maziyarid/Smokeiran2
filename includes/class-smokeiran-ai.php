@@ -64,6 +64,7 @@ class Smokeiran_AI {
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
         $this->loader->add_action('admin_init', $plugin_admin, 'register_settings');
+        $this->loader->add_action('admin_init', $plugin_admin, 'handle_auto_process_settings');
         
         // AJAX hooks
         $this->loader->add_action('wp_ajax_smokeiran_generate_content', $plugin_admin, 'ajax_generate_content');
@@ -76,6 +77,9 @@ class Smokeiran_AI {
         
         // Classic editor integration
         $this->loader->add_filter('user_can_richedit', $plugin_admin, 'force_html_editor', 10, 1);
+        
+        // Cron hook for auto-processing
+        $this->loader->add_action('smokeiran_ai_process_queue', $plugin_admin, 'cron_process_queue');
     }
 
     /**

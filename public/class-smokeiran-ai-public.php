@@ -36,6 +36,20 @@ class Smokeiran_AI_Public {
             $this->version,
             false
         );
+
+        wp_localize_script(
+            $this->plugin_name,
+            'smokeiranAI',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('smokeiran_ai_nonce'),
+                'strings' => array(
+                    'generating' => __('Generating content...', 'smokeiran-ai'),
+                    'success' => __('Content generated successfully!', 'smokeiran-ai'),
+                    'error' => __('Error generating content', 'smokeiran-ai'),
+                )
+            )
+        );
     }
 
     /**
