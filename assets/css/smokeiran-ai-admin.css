@@ -1,0 +1,262 @@
+/* Smokeiran AI Admin Styles */
+
+.smokeiran-ai-settings,
+.smokeiran-ai-queue,
+.smokeiran-ai-generate {
+    max-width: 1200px;
+}
+
+.smokeiran-ai-header {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f0f0f1;
+    border-left: 4px solid #2271b1;
+}
+
+.smokeiran-ai-header p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Queue Statistics */
+.smokeiran-queue-stats {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    flex: 1;
+    min-width: 150px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.stat-box .stat-label {
+    display: block;
+    font-size: 12px;
+    color: #646970;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.stat-box .stat-value {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #1d2327;
+}
+
+.stat-pending {
+    border-left: 4px solid #f0b849;
+}
+
+.stat-processing {
+    border-left: 4px solid #2271b1;
+}
+
+.stat-completed {
+    border-left: 4px solid #00a32a;
+}
+
+.stat-failed {
+    border-left: 4px solid #d63638;
+}
+
+/* Queue Actions */
+.smokeiran-queue-actions {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.smokeiran-queue-actions button,
+.smokeiran-queue-actions .button {
+    margin-right: 10px;
+}
+
+/* Queue Table */
+.smokeiran-ai-queue table {
+    margin-top: 20px;
+}
+
+.smokeiran-ai-queue .column-id {
+    width: 60px;
+}
+
+.smokeiran-ai-queue .column-type {
+    width: 100px;
+}
+
+.smokeiran-ai-queue .column-status {
+    width: 120px;
+}
+
+.smokeiran-ai-queue .column-priority {
+    width: 80px;
+}
+
+.smokeiran-ai-queue .column-created {
+    width: 150px;
+}
+
+.smokeiran-ai-queue .column-actions {
+    width: 150px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: #f0b849;
+    color: #fff;
+}
+
+.status-processing {
+    background: #2271b1;
+    color: #fff;
+}
+
+.status-completed {
+    background: #00a32a;
+    color: #fff;
+}
+
+.status-failed {
+    background: #d63638;
+    color: #fff;
+}
+
+.error-message {
+    color: #d63638;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Messages */
+.smokeiran-message {
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.smokeiran-message.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.smokeiran-message.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+/* Generate Form */
+.smokeiran-generate-form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.smokeiran-content-preview {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f0f0f1;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.content-preview-box {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Info Section */
+.smokeiran-ai-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.smokeiran-ai-info h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #c3c4c7;
+    padding-bottom: 10px;
+}
+
+.smokeiran-ai-info h3 {
+    margin-top: 20px;
+}
+
+.smokeiran-ai-info code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.smokeiran-ai-info ul,
+.smokeiran-ai-info ol {
+    margin-left: 20px;
+}
+
+.smokeiran-ai-info li {
+    margin-bottom: 10px;
+}
+
+/* Loading Animation */
+.smokeiran-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top-color: #2271b1;
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .smokeiran-queue-stats {
+        flex-direction: column;
+    }
+    
+    .stat-box {
+        min-width: 100%;
+    }
+    
+    .smokeiran-queue-actions button,
+    .smokeiran-queue-actions .button {
+        margin-bottom: 10px;
+        display: block;
+        width: 100%;
+    }
+}
